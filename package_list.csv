@@ -1,3 +1,5 @@
-name,debian,snap,flatpack,appimage,recommend
+name,debian,snap,flatpak,appimage,recommend
 bzoing,0,1,0,0,1
 builder,1,0,1,0,2
+handbrake,1,1,1,1,2
+pinta,0,1,1,1,1

@@ -8,15 +8,15 @@ void recommend(int i, rapidcsv::Document doc) {
 	std::string arr[4] = {".deb", "Snap", "Flatpak", "AppImage"};
 	for (int j = 0; j < 4; j++) { 
 		if (doc.GetCell<std::string>(j + 1, i) == "1") {
-			std::cout << arr[j] << " found" << std::endl;
+			std::cout << arr[j] << " package is available." << std::endl;
 		}
 	}
 	std::cout << "\n";
 	std::cout << arr[stoi(doc.GetCell<std::string>(5, i))] << " recommended by Dan." << std::endl;
 	std::cout << "\n";
 	std::cout << "Disclaimer: this recomendation is made for ubuntu.\n";
-	std::cout << "If you don't agree with the recomendation explain us why at askdan issues on github.\n";
-	std::cout << "If you are the developer of the software please state your prefered format.\n";
+	std::cout << "If you don't agree with the recomendation explain us why\n at askdan issues on github.\n";
+	std::cout << "If you are the developer of the software please state\n your prefered format.\n";
 }
 
 int search(std::string package) {
