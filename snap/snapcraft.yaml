@@ -1,0 +1,25 @@
+name: askdan
+base: core24
+version: "master"
+summary: Ask Dan for a good package.
+description: |
+  Askdan will tell you Dan's recommendation for the type
+  of package to use.
+confinement: strict
+parts:
+  askdan:
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    source: .
+    build-packages:
+      - g++
+    organize:
+      bin/: bin/
+      data/: $SNAP_USER_DATA/
+    stage-packages: []
+     
+apps:
+  askdan:
+    command: usr/bin/askdan
+    plugs: [home]

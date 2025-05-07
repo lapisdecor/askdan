@@ -10,3 +10,15 @@ configure_file(
 	src/package_list.csv
 	COPYONLY
 )
+
+# Configurar a instalação
+install(
+    TARGETS askdan
+    RUNTIME DESTINATION bin
+)
+
+# Copiar a o ficheiro csv
+install(
+	FILES package_list.csv
+	DESTINATION data/
+)

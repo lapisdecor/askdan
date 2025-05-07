@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <filesystem>
+#include <cstdlib>
 #include "rapidcsv.h"
+
+namespace fs = std::filesystem;
 
 void recommend(int i, rapidcsv::Document doc) {
 	int j = 0;
@@ -15,15 +19,37 @@ void recommend(int i, rapidcsv::Document doc) {
 	std::cout << arr[stoi(doc.GetCell<std::string>(5, i))] << " recommended by Dan." << std::endl;
 	std::cout << "\n";
 	std::cout << "Disclaimer: this recomendation is made for ubuntu.\n";
-	std::cout << "If you don't agree with the recomendation explain us why\n at askdan issues on github.\n";
-	std::cout << "If you are the developer of the software please state\n your prefered format.\n";
+	std::cout << "If you don't agree with the recomendation explain us why\nat askdan issues on github.\n";
+	std::cout << "If you are the developer of the software please state\nyour prefered format.\n";
 }
 
 int search(std::string package) {
 	//std::cout << "You searched for " << package << std::endl;
 
 	// Search pakage_files.csv
-	rapidcsv::Document doc("package_list.csv");
+	std::string snap_user_data = std::getenv("SNAP_USER_DATA");
+	//std::cout << snap_user_data << std::endl;
+	if (snap_user_data == "") {
+	        std::cerr << "Error: Not running in a Snap environment!\n";
+	        return 1;
+	}
+	std::string path = snap_user_data + "/data/package_list.csv";
+	//std::cout << path << std::endl;
+	
+	std::string snap = std::getenv("SNAP");
+	
+	fs::path src_csv = fs::path(snap) / "usr" / "data" / "package_list.csv";
+	fs::path dest_dir = fs::path(snap_user_data) / "data";
+	fs::path dest_csv = dest_dir / "package_list.csv";
+
+	if (!fs::exists(dest_csv)) {
+		fs::create_directories(dest_dir);
+		fs::copy(src_csv, dest_csv);
+	}
+
+	
+	
+	rapidcsv::Document doc(path);
 
 	// Get columns names
 	//std::cout << "Columns: ";
