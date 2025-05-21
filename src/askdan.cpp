@@ -24,6 +24,16 @@ void recommend(int i, rapidcsv::Document doc) {
 	std::cout << "If you are the developer of the software please state\nyour prefered format.\n";
 }
 
+bool is_newer(fs::path source, fs::path destination) {
+    auto sourceTime = fs::last_write_time(source);
+    auto destTime = fs::last_write_time(destination);
+    if (sourceTime > destTime) {
+        return true;
+    }
+    return false;
+}
+
+
 int search(std::string package) {
 	//std::cout << "You searched for " << package << std::endl;
 
@@ -47,6 +57,10 @@ int search(std::string package) {
 	if (!fs::exists(dest_csv)) {
 		fs::create_directories(dest_dir);
 		fs::copy(src_csv, dest_csv);
+	} else {
+	    if (is_newer(src_csv, dest_csv)) {
+			fs::copy_file(src_csv, dest_csv, fs::copy_options::overwrite_existing);
+		}
 	}
 
 
