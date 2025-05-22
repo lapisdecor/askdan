@@ -35,7 +35,12 @@ bool is_newer(fs::path source, fs::path destination) {
 
 
 int search(std::string package) {
-	//std::cout << "You searched for " << package << std::endl;
+	// convert pakage to lowercase
+	std::string res_package;
+	for(auto x:package){
+        res_package +=  (char)tolower(x);
+    }
+    package = res_package;
 
 	// Search pakage_files.csv
 	const char* snap_user_data = std::getenv("SNAP_USER_DATA");
